@@ -1,0 +1,61 @@
+<div class= "jumbotron">
+    
+    <h1 id="grupo" >¿Empezar cuestionario? </h1>
+    <p id= "pregunta">Vacío</p>
+    
+    
+    <%= javascript_tag do %>
+        
+        function changeText() {
+    
+            
+            if (gon.counter < gon.blocks.length) {
+            
+                gon.questionsB = get_questions(gon.blocks[gon.counter].id);
+                
+                if (gon.counterQ < gon.questionsB.length) {
+                
+                    document.getElementById('grupo').innerHTML = gon.blocks[gon.counter].name;
+                    document.getElementById('pregunta').innerHTML = gon.questionsB[gon.counterQ].text;
+                    gon.counterQ = gon.counterQ + 1;
+                 
+                 } else {
+                 
+                    gon.counter = gon.counter + 1;
+                    gon.counterQ = 0;
+                 
+                 }
+                 
+            } else {
+            
+                //Fin del proceso
+                document.getElementById('grupo').innerHTML = "FIN";
+                document.getElementById('pregunta').innerHTML = " ";
+                //Quitar botones y añadir botón de submit
+             
+            }
+            
+        };
+        
+        function answerNo(){
+            gon.answers.push("no");
+        };
+        
+        function answerSi(){
+            gon.answers.push("sí");
+        };
+        
+        function get_questions(id){
+            
+            var filterd = gon.questions.filter( function(x) { return x.block_id === id })
+            return filterd
+
+        }
+        
+    <% end %>
+    
+    
+    <input class="btn btn-success btn-lg" type="button" value="Sí" id="b1" onclick="changeText(); answerSi();"/>
+    <input class="btn btn-danger btn-lg" type="button" value="No" id="b2" onclick="changeText(); answerNo();"/>
+                        
+</div>
